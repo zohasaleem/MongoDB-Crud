@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\BusinessProfile;
 use App\Exports\BusinessProfilesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
+
 
 class BusinessProfileController extends Controller
 {
@@ -23,29 +26,34 @@ class BusinessProfileController extends Controller
 
     public function getData(Request $request)
     {
-        
         if ($request->ajax()) {
 
             $date = $request->input('date');
 
-            if($date == null){
+            if ($date) {
 
-                $data = BusinessProfile::get();
+                $startOfDay = Carbon::createFromFormat('Y-m-d', $date)->startOfDay();
+                $endOfDay = $startOfDay->copy()->endOfDay();
+            
+                $data = BusinessProfile::where('created_at', '>=', $startOfDay)
+                    ->where('created_at', '<=', $endOfDay)
+                    ->get();
+            
             }
-
             else{
                 //Date Filter
-                $data = BusinessProfile::where('created_at', $date)->get();
+                $data = BusinessProfile::get();
             }
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 
                 ->addColumn('action', function ($row) {
-                    $btn = '<button class="btn btn-sm  btn-primary ml-2 p-2 display" style="margin-right: 9px;" data-type="'.$row->type.'" value="' . $row->url . '" type="button"><i class="fa fa-eye"></i></button>';
-                    $btn = $btn . '<a class="btn btn-sm btn-danger ml-2 p-2" style="margin-right: 9px;" href="'.url('business-profiles/'.$row->id).'" role="button"><i class="fa fa-trash"></i></a>';
-                    $btn = $btn . '<a class="btn btn-sm btn-dark ml-2 p-2" href="'.url('/business-profiles'.$row->id).'" role="button"><i class="fa fa-edit"></i></a>';
-                   
+                    $btn = '<div class="d-flex">';
+                    $btn .= '<a class="btn btn-sm btn-info" style="margin-right: 5px;" href="'.url('business-profiles-edit/'.$row->_id).'" role="button">Edit</i></a>';
+                    $btn .= '<a class="btn btn-sm btn-danger"  href="'.url('business-profiles-delete/'.$row->id).'" role="button">Del</a>';
+                    $btn .= '</div>';
+
                     return $btn;
                 }) 
                 ->addColumn('created', function ($row) {
@@ -78,21 +86,27 @@ class BusinessProfileController extends Controller
     }
 
 
-    public function edit(BusinessProfile $businessProfile)
+    public function edit($id)
     {
+        $businessProfile = BusinessProfile::find($id);
+
         return view('business-profile.edit', compact('businessProfile'));
     }
 
    
-    public function update(Request $request, BusinessProfile $businessProfile)
+    public function update(Request $request, $id)
     {
+        $businessProfile = BusinessProfile::find($id);
+
         $businessProfile->update($request->all());
         return redirect()->route('business-profiles.index')->with('success', 'Profile updated successfully.');;
     }
 
     
-    public function destroy(BusinessProfile $businessProfile)
+    public function destroy($id)
     {
+        $businessProfile = BusinessProfile::find($id);
+
         $businessProfile->delete();
         return redirect()->route('business-profiles.index')->with('success', 'Profile deleted successfully.');
 

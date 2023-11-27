@@ -21,9 +21,22 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('roles',RoleController::class);
 Route::resource('permissions',PermissionController::class);
 
-Route::resource('business-profiles',BusinessProfileController::class);
-Route::get('/business-profiles-list',    [BusinessProfileController::class, 'getData']);
-Route::get('/export', [BusinessProfileController::class, 'export']);
+// Route::resource('business-profiles',BusinessProfileController::class);
+// Route::get('/business-profiles-list',    [BusinessProfileController::class, 'getData']);
 
+Route::get('/business-profiles',    [BusinessProfileController::class, 'index'])->name('business-profiles.index');
 
+Route::get('/business-profiles-list', [BusinessProfileController::class, 'getData'])->name('business-profiles.list');
+
+Route::get('/business-profiles-create', [BusinessProfileController::class, 'create'])->name('business-profiles.create');
+
+Route::post('/business-profiles-store', [BusinessProfileController::class, 'store'])->name('business-profiles.store');
+
+Route::get('/business-profiles-edit/{id}', [BusinessProfileController::class, 'edit'])->name('business-profiles.edit');
+
+Route::put('/business-profiles-update/{id}', [BusinessProfileController::class, 'update'])->name('business-profiles.update');
+
+Route::get('/business-profiles-delete/{id}', [BusinessProfileController::class,'destroy'])->name('business-profiles.destroy');
+
+Route::get('/business-profiles-export', [BusinessProfileController::class, 'export'])->name('business-profiles.export');
 

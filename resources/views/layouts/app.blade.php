@@ -17,7 +17,7 @@
     <!--  Favicon -->
     <link rel="shortcut icon" type="image/png" href="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico" />
     <!-- Owl Carousel  -->
-    <link rel="stylesheet" href="{{ asset('dist/css/theme.css')}}">
+    <link rel="stylesheet" href="{{ asset('/dist/css/theme.css')}}">
     
     <!-- --------------------------------------------------- -->
     <!-- Prism Js -->
@@ -31,9 +31,11 @@
     <!-- --------------------------------------------------- -->
     <link rel="stylesheet" href="{{ asset('/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
 
-
     <!-- Core Css -->
     <link  id="themeColors"  rel="stylesheet" href="{{ asset('dist/css/style.min.css') }}" />
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
   </head>
   <body>
     <!-- Preloader -->
