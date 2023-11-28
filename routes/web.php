@@ -41,6 +41,8 @@ Route::get('/business-profiles-delete/{id}', [BusinessProfileController::class,'
 
 Route::get('/business-profiles-export', [BusinessProfileController::class, 'export'])->name('business-profiles.export');
 
+Route::post('/business-profiles-import', [BusinessProfileController::class, 'import'])->name('business-profiles.import');
+
 Route::get('/users-detail',    [UserController::class, 'detail'])->name('users.detail');
 
 Route::post('/users-update',    [UserController::class, 'updateUser'])->name('users.update');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BusinessProfile;
 use App\Exports\BusinessProfilesExport;
+use App\Imports\BusinessProfileImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -169,11 +170,10 @@ class BusinessProfileController extends Controller
     public function export(Request $request)
     {
 
-        
         $time = $request->input('filterType');
         $fromDate = $request->input('exportFromDate');
         $toDate = $request->input('exportToDate');
-// return response()->json(["fromDate" => $fromDate, "toDate" => $toDate]);
+        // return response()->json(["fromDate" => $fromDate, "toDate" => $toDate]);
         if($fromDate != null && $toDate != null){
 
             $startOfDay = Carbon::createFromFormat('Y-m-d', $fromDate)->startOfDay();
@@ -234,6 +234,21 @@ class BusinessProfileController extends Controller
         // return response()->json(["data" => $data]);
         return Excel::download($export, 'profile.xlsx');
         
+    }
+
+    public function import(Request $request){
+
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:10240', 
+        ]);
+
+        $file = $request->file('file');
+        // Excel::import(new BusinessProfileImport , $file);
+        Excel::import(new BusinessProfileImport, $request->file('file')->store('files'));
+
+
+        return redirect()->route('business-profiles.index');
+
     }
 
 

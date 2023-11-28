@@ -112,7 +112,7 @@
             </div>
             <div class="widget-content searchable-container list">
                 <!-- --------------------- start Contact ---------------- -->
-                <div class="card card-body">
+                {{--<div class="card card-body">
                     <div class="row">
                         <div class="col-md-4 col-xl-3"  style="visibility: hidden">
                             <form class="position-relative">
@@ -122,18 +122,24 @@
                         </div>
                         
                     </div>
-                </div>
+                </div>--}}
                 <!-- ---------------------
                                 end Contact
                             ---------------- -->
-                <div style="display:flex; align-items:center; justify-content: space-between; margin-bottom: 20px; margin-top:50px;">
-                    <form id="exportForm" action="{{ url('business-profiles-export') }}" method="GET">
-                        <input type="hidden" name="filterType" id="filterType" value="">
-                        <input type="hidden" name="exportFromDate" id="exportFromDate" value="">
-                        <input type="hidden" name="exportToDate" id="exportToDate" value="">
-                        <button type="submit" id="exportButton" class=" me-2 btn btn-primary">Export</button>
-                    </form>
+                <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; margin-top:50px;">
 
+                    <div style="display:flex; align-items:center; justify-content: space-between; margin-bottom: 0px;">
+                        <form id="exportForm" action="{{ url('business-profiles-export') }}" method="GET">
+                            <input type="hidden" name="filterType" id="filterType" value="">
+                            <input type="hidden" name="exportFromDate" id="exportFromDate" value="">
+                            <input type="hidden" name="exportToDate" id="exportToDate" value="">
+                            <button type="submit" id="exportButton" class="btn btn-primary">Export</button>
+                        </form>
+
+                        <button type="button" class="btn btn-primary" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#import-modal" data-bs-whatever="@mdo">
+                            Import
+                        </button>
+                    </div>
                     <form id="filter-form" style="display:flex; align-items:center; justify-content: space-between; margin-bottom: 0px;">
                 
                         <label for="from_date" class="me-2 h4"  ></label>
@@ -146,6 +152,45 @@
                         
                     </form>
                 </div>
+
+              
+                
+
+                <div class="modal fade" id="import-modal" tabindex="-1" aria-labelledby="exampleModalLabel1">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="{{ route('business-profiles.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-header d-flex align-items-center">
+                                <h4 class="modal-title" id="exampleModalLabel1">
+                                Upload Excel File
+                                </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="file" name="file" class="form-control" accept=".xlsx, .xls, .csv" enctype="multipart/form-data" required>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-light-primary text-primary font-medium" >
+                                    Import
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+       
+
+
+
+
+
+
+
+
+
+
             
                 <div class="card card-body">
                     <div class="table-responsive" style="overflow-x:hidden">
@@ -154,10 +199,10 @@
 
                             
                                 <th>Name</th>
-                            <th>Category</th>
-                            <th>Phone</th>
-                            <th>Signup Date</th>
-                            <th>Action</th>
+                                <th>Category</th>
+                                <th>Phone</th>
+                                <th>Signup Date</th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                             <!-- start row -->
