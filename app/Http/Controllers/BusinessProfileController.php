@@ -41,8 +41,7 @@ class BusinessProfileController extends Controller
     {
         if ($request->ajax()) {
 
-            $time = $request->input('t');
-            
+            $time = $request->input('time');
             $fromDate = $request->input('from_date');
             $toDate = $request->input('to_date');
             
@@ -97,6 +96,7 @@ class BusinessProfileController extends Controller
             else{
                     $data = BusinessProfile::where('created_at', '>', $dt)->orderBy('_id','desc')->get();
             }
+            // return response()->json(["data" => $data]);
 
             return Datatables::of($data)
                 ->addIndexColumn()

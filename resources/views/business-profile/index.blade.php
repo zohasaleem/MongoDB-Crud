@@ -221,11 +221,12 @@
 
 <script  type="text/javascript">
 
+    var urlParams = new URLSearchParams(window.location.search);
+    var filterType = urlParams.get('t');
+
     document.getElementById('exportButton').addEventListener('click', function() {
 
-        var urlParams = new URLSearchParams(window.location.search);
-        var filterType = urlParams.get('t');
-            $('#filterType').val(filterType);
+        $('#filterType').val(filterType);
         var fromDate =  $('#exportFromDate').val($('#from_date').val());
         var toDate =  $('#exportToDate').val($('#to_date').val());
         console.log(urlParams);
@@ -235,9 +236,6 @@
 
         $('#exportForm').submit();
 
-
-
-
     });
 
 
@@ -245,7 +243,8 @@
     $(function () {
  
         setTimeout(function () {
-            
+            console.log(filterType);
+
             table = $('.profile-listing').DataTable({
                 processing: true,
                 serverSide: true,
@@ -253,8 +252,9 @@
                     url :"{{ url('/business-profiles-list') }}",
                     data: function (d) {
 
-                        d.from_date = $('#from_date').val();
-                        d.to_date = $('#to_date').val();
+                        d.from_date = $('#from_date').val(),
+                        d.to_date = $('#to_date').val(),
+                        d.time = filterType
 
                     }
                 },
