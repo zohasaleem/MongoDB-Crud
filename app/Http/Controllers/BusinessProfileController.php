@@ -9,6 +9,7 @@ use App\Imports\BusinessProfileImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class BusinessProfileController extends Controller
@@ -22,8 +23,16 @@ class BusinessProfileController extends Controller
     {          
         $time = $request->query('t');
 
-        $dataToday = BusinessProfile::where('created_at', Carbon::today())->count();
-        $dataYesterday = BusinessProfile::where('created_at', '>', Carbon::yesterday())->count();
+        // $dataToday = BusinessProfile::where('created_at', Carbon::today())->count();
+        $dataToday = BusinessProfile::where('created_at', '>=', Carbon::today()->startOfDay())
+                                    ->where('created_at', '<', Carbon::tomorrow()->startOfDay())
+                                    ->count();
+
+        // $dataYesterday = BusinessProfile::where('created_at', '>', Carbon::yesterday())->count();
+        $dataYesterday = BusinessProfile::where('created_at', '>=', Carbon::yesterday()->startOfDay())
+                                        ->where('created_at', '<', Carbon::today()->startOfDay())
+                                        ->count();
+
         $dataThisWeek = BusinessProfile::where('created_at', '>', Carbon::now()->startOfWeek())->count();
         $dataThisMonth = BusinessProfile::where('created_at', '>', Carbon::now()->startOfMonth())->count();
         $dataThisYear = BusinessProfile::where('created_at', '>', Carbon::now()->startOfYear())->count();
@@ -35,11 +44,38 @@ class BusinessProfileController extends Controller
                                         ->count();
 
 
-        return view('business-profile.index',compact('dataToday','dataYesterday','dataThisWeek','dataThisMonth','dataThisYear','time','dataLastMonth'));
+
+        //for graph
+        $userData = BusinessProfile::raw(function ($collection) {
+            return $collection->aggregate([
+                [
+                    '$group' => [
+                        '_id' => [
+                            '$dateToString' => [
+                                'format' => '%Y-%m-%d',
+                                'date' => '$created_at',
+                            ],
+                        ],
+                        'count' => ['$sum' => 1],
+                    ],
+                ],
+                [
+                    '$sort' => ['_id' => 1],
+                ],
+            ]);
+        });
+
+        $dates = $userData->pluck('_id')->toArray();
+        $counts = $userData->pluck('count')->toArray();
+
+
+        return view('business-profile.index',compact('dataToday','dataYesterday','dataThisWeek','dataThisMonth','dataThisYear','time','dataLastMonth', 'dates', 'counts'));
     }
 
     public function getData(Request $request)
     {
+        set_time_limit(300);
+
         if ($request->ajax()) {
 
             $time = $request->input('time');
@@ -47,42 +83,52 @@ class BusinessProfileController extends Controller
             $toDate = $request->input('to_date');
             
 
-            if($time == 'yesterday'){
-                $dt = Carbon::yesterday();
-            }
-
-            elseif($time == 'week'){
+            if($time == 'week'){
                 $dt = Carbon::now()->startOfWeek();
             }
 
             elseif($time == 'month'){
                 $dt = Carbon::now()->startOfMonth();
+
             }
 
             elseif($time == 'year'){
                 $dt = Carbon::now()->startOfYear();
+
             }  
             
             else{
                 $time = 'today';
                 $dt = Carbon::today();
+
+            }
+            
+            if($request->input('time') == 'yesterday'){
+                
+                $yesterday =  Carbon::yesterday()->startOfDay();
+                $today = Carbon::today()->startOfDay();
+
+                $data = BusinessProfile::where('created_at', '>=', $yesterday)
+                                        ->where('created_at', '<', $today)
+                                        ->get();
             }
                 
-            if($request->query('t') =='lastmonth'){
+            elseif($request->input('time') == 'lastmonth'){
 
                 $lastMonthStart = Carbon::now()->subMonth(1)->startOfMonth();
                 $lastMonthEnd = Carbon::now()->subMonth(1)->endOfMonth();
 
                 $data = BusinessProfile::where('created_at', '>=', $lastMonthStart)
-                                        ->where('created_at', '<=', $lastMonthEnd)
-                                        ->get();
+                ->where('created_at', '<=', $lastMonthEnd)
+                ->get();
 
-                foreach($data as $r)
-                {
-                    $r->user = Users::where('_id',$r->user_id)->first();   
-                }
-
-            }            
+                // foreach($data as $r)
+                // {
+                //     $r->user = Users::where('_id',$r->user_id)->first(); 
+                // }
+                                    
+            }
+                        
 
             elseif($fromDate != null && $toDate != null){
 
@@ -95,9 +141,8 @@ class BusinessProfileController extends Controller
 
          
             else{
-                    $data = BusinessProfile::where('created_at', '>', $dt)->orderBy('_id','desc')->get();
+                    $data = BusinessProfile::where('created_at', '>', $dt)->orderBy('_id','desc')->limit(10000)->get();
             }
-            // return response()->json(["data" => $data]);
 
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -173,7 +218,7 @@ class BusinessProfileController extends Controller
         $time = $request->input('filterType');
         $fromDate = $request->input('exportFromDate');
         $toDate = $request->input('exportToDate');
-        // return response()->json(["fromDate" => $fromDate, "toDate" => $toDate]);
+
         if($fromDate != null && $toDate != null){
 
             $startOfDay = Carbon::createFromFormat('Y-m-d', $fromDate)->startOfDay();
@@ -238,14 +283,12 @@ class BusinessProfileController extends Controller
 
     public function import(Request $request){
 
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv|max:10240', 
-        ]);
+        
+        set_time_limit(300);
 
         $file = $request->file('file');
-        // Excel::import(new BusinessProfileImport , $file);
-        Excel::import(new BusinessProfileImport, $request->file('file')->store('files'));
 
+        Excel::import(new BusinessProfileImport, $request->file('file')->store('files'));
 
         return redirect()->route('business-profiles.index');
 

@@ -43,6 +43,7 @@ Route::get('/business-profiles-export', [BusinessProfileController::class, 'expo
 
 Route::post('/business-profiles-import', [BusinessProfileController::class, 'import'])->name('business-profiles.import');
 
+
 Route::get('/users-detail',    [UserController::class, 'detail'])->name('users.detail');
 
 Route::post('/users-update',    [UserController::class, 'updateUser'])->name('users.update');

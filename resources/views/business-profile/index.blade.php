@@ -67,7 +67,9 @@
                     <div class="card border-0 zoom-in bg-light-primary shadow-none">
                         <div class="card-body">
                             <div class="text-center">
-                                <a href="{{url('/business-profiles?t=lastmonth')}}" >  <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-user-male.svg" width="50" height="50" class="mb-3" alt="" /></a>
+                                <a href="{{url('/business-profiles?t=lastmonth')}}" >  
+                                    <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-user-male.svg" width="50" height="50" class="mb-3" alt="" />
+                                </a>
                                 <p class="fw-semibold fs-3 text-primary mb-1"> Last Month </p>
                                 <h5 class="fw-semibold text-primary mb-0">{{@$dataLastMonth}}</h5>
                             </div>
@@ -78,7 +80,9 @@
                     <div class="card border-0 zoom-in bg-light-success shadow-none">
                         <div class="card-body">
                             <div class="text-center">
-                                <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-speech-bubble.svg" width="50" height="50" class="mb-3" alt="" />
+                                <a href="{{url('/business-profiles?t=year')}}" >  
+                                    <img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-speech-bubble.svg" width="50" height="50" class="mb-3" alt="" />
+                                </a>
                                 <p class="fw-semibold fs-3 text-success mb-1">This Year</p>
                                 <h5 class="fw-semibold text-success mb-0">{{@$dataThisYear}}</h5>
                             </div>
@@ -88,7 +92,7 @@
                 
             </div>
 
-
+            
             
             <div class="card bg-light-info shadow-none position-relative overflow-hidden">
                 <div class="card-body px-4 py-3">
@@ -123,6 +127,12 @@
                         
                     </div>
                 </div>--}}
+
+
+                <!-- Daily Business Profiles Graph -->
+                @include('components.graphs.daily-business-profiles')
+
+
                 <!-- ---------------------
                                 end Contact
                             ---------------- -->
@@ -181,16 +191,6 @@
                     </div>
                 </div>
        
-
-
-
-
-
-
-
-
-
-
             
                 <div class="card card-body">
                     <div class="table-responsive" style="overflow-x:hidden">
@@ -274,10 +274,6 @@
         $('#filterType').val(filterType);
         var fromDate =  $('#exportFromDate').val($('#from_date').val());
         var toDate =  $('#exportToDate').val($('#to_date').val());
-        console.log(urlParams);
-        console.log(filterType);
-        console.log(fromDate);
-        console.log(toDate);
 
         $('#exportForm').submit();
 
@@ -343,4 +339,6 @@
 
         }, 2000); 
     });
+
+
 </script>

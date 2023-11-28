@@ -4,8 +4,10 @@ namespace App\Exports;
 
 use App\Models\BusinessProfile;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class BusinessProfilesExport implements FromCollection
+
+class BusinessProfilesExport implements FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -22,5 +24,18 @@ class BusinessProfilesExport implements FromCollection
     public function collection()
     {
         return $this->data;
+    }
+
+    public function headings(): array
+    {
+        return [
+            '_id',
+            'name',
+            'phone',
+            'category',
+            'address',
+            'created_at',
+            'updated_at'
+        ];
     }
 }
