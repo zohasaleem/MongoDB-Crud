@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\RoleController;
 use App\Http\Controllers\Web\PermissionController;
 use App\Http\Controllers\BusinessProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Session;
 
 
@@ -40,3 +41,6 @@ Route::get('/business-profiles-delete/{id}', [BusinessProfileController::class,'
 
 Route::get('/business-profiles-export', [BusinessProfileController::class, 'export'])->name('business-profiles.export');
 
+Route::get('/users-detail',    [UserController::class, 'detail'])->name('users.detail');
+
+Route::post('/users-update',    [UserController::class, 'updateUser'])->name('users.update');
