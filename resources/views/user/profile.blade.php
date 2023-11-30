@@ -62,7 +62,7 @@
     <div class="card shadow-none border">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <form action="{{ route('users.update') }}" method="POST">
+          <form action="{{ route('users-profile.update') }}" method="POST">
               @csrf 
               
               <input type="hidden" name="id" value="{{ auth()->user()->_id }}">

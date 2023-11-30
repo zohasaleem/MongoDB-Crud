@@ -6,11 +6,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <h4>Edit Permission</h4>
-                    </div>
 
                     <div class="card-body">
+
+                        <h4 style="margin-bottom: 30px;">Edit Permission</h4>
+
                         <form action="{{route('permissions.update', [$permission])}}" method= "POST">
                             @csrf
                             @method("PUT")
@@ -18,7 +18,7 @@
                             <input type="text" name="name" id="name" class="form-control mb-2" value="{{$permission->name}}">
 
 
-                            <button type="submit" class="btn btn-md btn-primary">Update</button>
+                            <button type="submit" class="btn btn-md btn-primary my-3">Update</button>
                         </form>
 
                     </div>

@@ -180,7 +180,7 @@ class BusinessProfileController extends Controller
     public function store(Request $request)
     {
 
-        $author = BusinessProfile::create($request->all());
+        BusinessProfile::create($request->all());
    
         return redirect()->route('business-profiles.index')->with('success', 'Profile created successfully.');;
     }

@@ -14,6 +14,9 @@
                         <form action="{{route('roles.update', [$role])}}" method= "POST">
                             @csrf
                             @method("PUT")
+
+                            <input type="hidden" name="id" value="{{ $role->_id }}">
+
                             <label for="name">Name</label>
                             <input type="text" name="name" id="name" class="form-control mb-2" value="{{$role->name}}">
                             

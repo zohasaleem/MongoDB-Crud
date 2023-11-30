@@ -4,8 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+
 
 class RoleAndPermissionSeeder extends Seeder
 {
@@ -25,19 +24,19 @@ class RoleAndPermissionSeeder extends Seeder
         $adminRole = Role::create(['name' => 'Admin']);
         $editorRole = Role::create(['name' => 'Editor']);
 
-        // $adminRole->givePermissionTo([
-        //     'create-users',
-        //     'edit-users',
-        //     'delete-users',
-        //     'create-blog-posts',
-        //     'edit-blog-posts',
-        //     'delete-blog-posts',
-        // ]);
+        $adminRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'create-blog-posts',
+            'edit-blog-posts',
+            'delete-blog-posts',
+        ]);
 
-        // $editorRole->givePermissionTo([
-        //     'create-blog-posts',
-        //     'edit-blog-posts',
-        //     'delete-blog-posts',
-        // ]);
+        $editorRole->givePermissionTo([
+            'create-blog-posts',
+            'edit-blog-posts',
+            'delete-blog-posts',
+        ]);
     }
 }

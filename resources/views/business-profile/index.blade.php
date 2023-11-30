@@ -1,7 +1,7 @@
 @include('layouts.app')
 
 
-<div class="page-wrapper" id="main-wrapper" data-theme="blue_theme"  data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+<div class="page-wrapper" id="main-wrapper" data-theme="blue_theme"  data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed"  style="margin-top:-30px;">
 
     <div class="body-wrapper">
     
@@ -165,7 +165,7 @@
 
               
                 
-
+                <!-- Import Modal  -->
                 <div class="modal fade" id="import-modal" tabindex="-1" aria-labelledby="exampleModalLabel1">
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -193,7 +193,7 @@
        
             
                 <div class="card card-body">
-                    <div class="table-responsive" style="overflow-x:hidden">
+                    <div class="table-responsive" style="overflow:inherit;">
                         <table class="table search-table align-middle text-nowrap profile-listing">
                             <thead class="header-item">
 

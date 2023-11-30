@@ -5,14 +5,13 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+            <h3 class="m-3">{{ ucfirst($role->name) }} Role</h3>
+
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <h4>{{$role->name}} Role</h4>
-                    </div>
 
                     <div class="card-body">
                         
-                        <h3>Assigned permissions</h3>
+                        <h4>Assigned permissions</h4>
 
                         <table class="table table-stripped">
                             <thead>
@@ -31,7 +30,7 @@
                                         <td>{{ $permission->guard_name }}</td>
 
                                         <td class="d-flex">
-                                            <a href="{{route('roles.edit', [$role])}}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                            <a href="{{route('permissions.edit', [$permission])}}" class="btn btn-sm btn-primary mr-2">Edit</a>
                                            
                                         </td>
 

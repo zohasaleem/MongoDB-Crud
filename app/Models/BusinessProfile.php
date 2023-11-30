@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use AptCD\Permission\Traits\HasRoles;
 
-class BusinessProfile extends Eloquent
+
+class BusinessProfile extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
 
+    protected $guard_name = 'web';
     protected $collection = 'business_profiles';
     protected $guarded = [];
 
