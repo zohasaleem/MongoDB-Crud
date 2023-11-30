@@ -11,7 +11,9 @@
 
                 <div class="card card-body">
                     
-                    <div style="display:flex; align-items:center; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; margin-top:50px;">
+                    <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; margin-top:50px;">
+
+                        <a href="{{route('roles.create')}}" class="btn btn-primary">Add</a>
 
                         <form id="filter-form" style="display:flex; align-items:center; justify-content: space-between; margin-bottom: 0px;">
                     

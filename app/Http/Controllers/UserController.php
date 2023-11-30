@@ -75,9 +75,12 @@ class UserController extends Controller
 
     public function edit($id)
     {
+
         $user = User::find($id);
         
         $roles = Role::get();
+
+        // return $user->roles;
        
         return view('user.edit', compact('user', 'roles'));
     }
@@ -121,9 +124,9 @@ class UserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
 
-        if ($request->has('password')) {
-            $user->password = Hash::make($request->input('password'));
-        }
+        // if ($request->has('password')) {
+        //     $user->password = Hash::make($request->input('password'));
+        // }
         
         $user->save();
         return redirect()->route('users.detail');

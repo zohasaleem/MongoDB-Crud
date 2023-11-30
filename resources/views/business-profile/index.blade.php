@@ -138,7 +138,11 @@
                             ---------------- -->
                 <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; margin-top:50px;">
 
+
                     <div style="display:flex; align-items:center; justify-content: space-between; margin-bottom: 0px;">
+
+                        <a href="{{route('business-profiles.create')}}" class="btn btn-primary" style="margin-right: 10px;">Add</a>
+
                         <form id="exportForm" action="{{ url('business-profiles-export') }}" method="GET">
                             <input type="hidden" name="filterType" id="filterType" value="">
                             <input type="hidden" name="exportFromDate" id="exportFromDate" value="">

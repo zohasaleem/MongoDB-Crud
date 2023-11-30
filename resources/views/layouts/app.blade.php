@@ -54,7 +54,7 @@
 
 
     <!-- Sidebar Start -->
-        @include('components.sidebar')
+        @include('components.sidebar.main')
     <!--  Sidebar End -->
 
 

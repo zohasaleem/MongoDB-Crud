@@ -21,18 +21,18 @@
                 <label for="email"> Email</label>
                 <input type="email" name="email" class="form-control mb-3" value="{{ $user->email }}">
 
-                <label for="password"> Password</label>
-                <input type="password" name="password" class="form-control mb-3" value="">
+                {{--<label for="password"> Password</label>
+                <input type="password" name="password" class="form-control mb-3" value="">--}}
 
                 <div class="mb-3">
                     <label>Select Role</label>
-                    <select name="role_id" class="form-select col-12" id="inlineFormCustomSelect">
-                      @if(empty($user->role_ids))
-                          <option value="" selected>Choose role...</option>
-                      @endif
+                      <select name="role_id" class="form-select col-12" id="inlineFormCustomSelect">
+                        @if(empty($user->role_ids))
+                            <option value="" selected>Choose role...</option>
+                        @endif
 
                       @foreach ($roles as $role)
-                          <option value="{{ $role->_id }}" {{ (in_array($role->_id, $user->role_ids)) ? 'selected' : '' }}>
+                          <option value="{{ $role->_id }}" {{ (is_array($user->role_ids) && in_array($role->_id, $user->role_ids)) ? 'selected' : '' }}>
                               {{ $role->name }}
                           </option>
                       @endforeach
