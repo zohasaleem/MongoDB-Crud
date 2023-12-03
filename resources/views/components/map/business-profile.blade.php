@@ -6,7 +6,7 @@
 
             @foreach ($categories as $data)
                 <div  class="category-text" style="margin: 10px 15px 10px 5px;">
-                    <input type="checkbox" class="marker-checkbox" data-category="{{$data->category}}"  data-lat="{{$data->latitude}}" data-lng="{{$data->longitude}}" checked  style="margin-right: 5px;">
+                    <input type="checkbox" class="marker-checkbox" data-businessname="{{ $data->name }}"  data-lat="{{$data->latitude}}" data-lng="{{$data->longitude}}" checked  style="margin-right: 5px;">
                     {{ $data->category }}
                 </div>
             @endforeach
@@ -65,7 +65,7 @@
             $(document).on('change', '.marker-checkbox', function () {
                 var lat = parseFloat($(this).data('lat'));
                 var lng = parseFloat($(this).data('lng'));
-                var category = $(this).data('category');
+                var businessname = $(this).data('businessname');
 
 
                 if ($(this).prop('checked')) {
@@ -75,7 +75,7 @@
                         label: {
                             color: 'white',
                             fontWeight: 'bold',
-                            text: category
+                            text: businessname
                         }
                     });
 
@@ -94,5 +94,3 @@
 
     });
 </script>
-
-

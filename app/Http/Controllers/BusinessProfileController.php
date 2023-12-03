@@ -70,8 +70,7 @@ class BusinessProfileController extends Controller
 
 
         // for Map
-        $categories = BusinessProfile::select('category', 'latitude', 'longitude')->get();
-        // return $categories;
+        $categories = BusinessProfile::select('name', 'category', 'latitude', 'longitude')->get();
         
         return view('business-profile.index',compact('dataToday','dataYesterday','dataThisWeek','dataThisMonth','dataThisYear','time','dataLastMonth', 'dates', 'counts', 'categories'));
     }
