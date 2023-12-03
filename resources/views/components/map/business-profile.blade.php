@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxgkHPsr2kCn9TAnr73czj-ph2mvj9dbo&callback=showmap"  defer></script>
+<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxgkHPsr2kCn9TAnr73czj-ph2mvj9dbo"  defer></script>
 
 
 
@@ -26,7 +26,6 @@
         var map;
         var markers = [];
 
-        function map() {
             $.ajax({
                 url: '/business-profiles-map',
                 type: 'GET',
@@ -35,9 +34,7 @@
                 
                 }
             });
-        }
-        map();
-        setInterval(map, 120000);
+       
 
 
 
