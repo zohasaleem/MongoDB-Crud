@@ -69,9 +69,14 @@ class BusinessProfileController extends Controller
         $counts = $userData->pluck('count')->toArray();
 
 
-        return view('business-profile.index',compact('dataToday','dataYesterday','dataThisWeek','dataThisMonth','dataThisYear','time','dataLastMonth', 'dates', 'counts'));
+        // for Map
+        $categories = BusinessProfile::select('category', 'latitude', 'longitude')->get();
+        // return $categories;
+        
+        return view('business-profile.index',compact('dataToday','dataYesterday','dataThisWeek','dataThisMonth','dataThisYear','time','dataLastMonth', 'dates', 'counts', 'categories'));
     }
 
+    // lists data in data table
     public function getData(Request $request)
     {
         set_time_limit(300);
@@ -156,6 +161,10 @@ class BusinessProfileController extends Controller
 
                     return $btn;
                 }) 
+                // ->addColumn('lat_lng', function ($row) {
+                //     return '<div > <input type="checkbox" class="marker-checkbox" data-lat="' . $row->latitude . '" data-lng="' . $row->longitude . '" checked  style="margin-right: 10px;" >'.$row->category.'</div>';
+
+                //     })
                 ->addColumn('created', function ($row) {
         
                     $created_at = $row->created_at;
@@ -176,7 +185,7 @@ class BusinessProfileController extends Controller
         return view('business-profile.create');
     }
 
-   
+    // generate new record
     public function store(Request $request)
     {
 
@@ -193,7 +202,6 @@ class BusinessProfileController extends Controller
         return view('business-profile.edit', compact('businessProfile'));
     }
 
-   
     public function update(Request $request, $id)
     {
         $businessProfile = BusinessProfile::find($id);
@@ -202,7 +210,7 @@ class BusinessProfileController extends Controller
         return redirect()->route('business-profiles.index')->with('success', 'Profile updated successfully.');;
     }
 
-    
+    // delete
     public function destroy($id)
     {
         $businessProfile = BusinessProfile::find($id);
@@ -212,6 +220,8 @@ class BusinessProfileController extends Controller
 
     }
 
+    
+    // for eporting data
     public function export(Request $request)
     {
 
@@ -281,6 +291,8 @@ class BusinessProfileController extends Controller
         
     }
 
+
+    // for importing data
     public function import(Request $request){
 
         
@@ -294,5 +306,13 @@ class BusinessProfileController extends Controller
 
     }
 
+    // for Map
+    public function showMap(){
+
+        $dataForMap = BusinessProfile::select('name', 'latitude', 'longitude')->get();
+
+        return response()->json(['dataForMap' => $dataForMap]);
+
+    }
 
 }

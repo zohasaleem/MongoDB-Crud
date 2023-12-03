@@ -33,6 +33,18 @@
                                 </div>
 
                                 <div class="col-md-6">
+
+                                    <label for="name">Latitude</label>
+                                    <input type="text" name="latitude" class="form-control mb-3">
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label for="name">Longitude</label>
+                                    <input type="text" name="longitude" class="form-control mb-3">
+                                </div>
+
+                                <div class="col-md-6">
                                     <label for="name">Address</label>
                                     <input type="text" name="address" class="form-control mb-3">
                                 </div>

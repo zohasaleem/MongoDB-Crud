@@ -133,6 +133,9 @@
                 @include('components.graphs.daily-business-profiles')
 
 
+                <!-- Business Profiles Map -->
+                @include('components.map.business-profile')
+
                 <!-- ---------------------
                                 end Contact
                             ---------------- -->
@@ -203,13 +206,14 @@
 
                             
                                 <th>Name</th>
-                                <th>Category</th>
                                 <th>Phone</th>
+                                <th>Category</th>
+                                <!-- <th>Lat & Lng</th> -->
                                 <th>Signup Date</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                            <!-- start row -->
+
                             {{--
                                 @foreach($data as $post)
 
@@ -254,7 +258,6 @@
                                     </tr>
                                 @endforeach
                             --}}
-                            <!-- end row -->
 
                             </tbody>
                         </table>
@@ -319,6 +322,10 @@
                         name: 'category'
                     },
             
+                    // {
+                    //     data: 'lat_lng',
+                    //     name: 'lat_lng'
+                    // },
                     {
                         data: 'created',
                         name: 'created'

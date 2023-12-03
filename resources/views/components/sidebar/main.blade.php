@@ -21,7 +21,7 @@
 
     @endrole
 
-    @if(auth()->user()->hasRole('editor'))
+    @if(auth()->user()->hasRole('editor') || auth()->user()->hasRole('user'))
       @include('components.sidebar.partials.editor')
     @endrole
 

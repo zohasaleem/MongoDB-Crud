@@ -116,24 +116,9 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     Route::post('/business-profiles-import', [BusinessProfileController::class, 'import'])->name('business-profiles.import');
 
+    Route::get('/business-profiles-map', [BusinessProfileController::class, 'showMap'])->name('business-profiles.map');
 
-    // =======================
-    // Blogs
-    // =======================
 
-    Route::get('/blogs',    [BlogController::class, 'index'])->name('blogs.index');
-
-    Route::get('/blogs-list', [BlogController::class, 'getData'])->name('blogs.list');
-
-    Route::get('/blogs-create', [BlogController::class, 'create'])->name('blogs.create');
-
-    Route::post('/blogs-store', [BlogController::class, 'store'])->name('blogs.store');
-
-    Route::get('/blogs-edit/{id}', [BlogController::class, 'edit'])->name('blogs.edit');
-
-    Route::put('/blogs-update/{id}', [BlogController::class, 'update'])->name('blogs.update');
-
-    Route::get('/blogs-delete/{id}', [BlogController::class,'destroy'])->name('blogs.destroy');
 
 });
 
@@ -142,7 +127,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 // Editor
 // ==============
 
-Route::group(['middleware' => ['role:editor']], function () {
+Route::group(['middleware' => ['role:user|editor|admin']], function () {
 
 
     // =======================

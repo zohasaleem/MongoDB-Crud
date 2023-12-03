@@ -31,6 +31,17 @@
                                 <label for="category">Category</label>
                                 <input type="text" name="category" class="form-control mb-3" value="{{$businessProfile->category}}">
                             </div>
+
+                            <div class="col-md-6">
+                                <label for="latitude">Latitude</label>
+                                <input type="text" name="latitude" class="form-control mb-3" value="{{$businessProfile->latitude}}">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="longitude">Longitude</label>
+                                <input type="text" name="longitude" class="form-control mb-3" value="{{$businessProfile->longitude}}">
+                            </div>
+
                             <div class="col-md-6">
                                 <label for="address"><Address></Address></label>
                                 <input type="text" name="address" class="form-control mb-3" value="{{$businessProfile->address}}">
